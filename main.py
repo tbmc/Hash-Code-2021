@@ -10,7 +10,7 @@ def simple_compute(file_name: str) -> None:
     output: OUTPUT_TYPE = defaultdict(list)
 
     for intersection, (input_road, output_road) in data.intersection_dict.items():
-        for road in input_road:
+        for road in output_road:
             output[intersection].append((road, 1))
 
     write_to_file(f"output/{file_name}.txt", output)
