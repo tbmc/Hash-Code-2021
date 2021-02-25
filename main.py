@@ -1,4 +1,5 @@
 from typing import Tuple, List, Dict
+import math
 from collections import defaultdict
 from read_data import read_data
 
@@ -34,9 +35,10 @@ def compute_with_counter(file_name: str) -> None:
                 number_of_car = road_counter[road]
                 if number_of_car > 0:
                     _, _, road_time = data.road_dict[road]
-                    road_time_divided = road_time / 4
-                    number_of_car = int(number_of_car / (count / 10) / road_time_divided)
+                    number_of_car = int(number_of_car / (count / math.sqrt(count)))
                     number_of_car = max(number_of_car, 1)
+                    if road_time > 25:
+                        number_of_car = 1
                     # number_of_car = min(number_of_car, 5)
                     output[intersection].append((road, number_of_car))
 
