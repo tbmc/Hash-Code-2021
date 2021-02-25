@@ -30,5 +30,6 @@ def write_to_file(file_path: str, output: OUTPUT_TYPE) -> None:
 
 
 if __name__ == "__main__":
-    simple_compute("a")
+    for name in "abcdef":
+        simple_compute(name)
 
