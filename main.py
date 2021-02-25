@@ -11,15 +11,30 @@ def simple_compute(file_name: str) -> None:
 
     counter = 0
     for intersection, (column_1, column_2) in data.intersection_dict.items():
-        if len(column_2) == 1:
-            counter += 1
-            for road in column_2:
-                output[intersection].append((road, data.duration))
-        else:
-            for road in column_2:
-                output[intersection].append((road, 1))
+        for road in column_2:
+            output[intersection].append((road, 1))
 
     print(f"Intersection with only 1 input road: {counter}")
+    write_to_file(f"output/{file_name}.txt", output)
+
+
+def compute_with_counter(file_name: str) -> None:
+    data = read_data(f"data/{file_name}.txt")
+    output: OUTPUT_TYPE = defaultdict(list)
+
+    road_counter: Dict[str, int] = defaultdict(lambda: 0)
+    for road_list in data.car_list:
+        for road in road_list:
+            road_counter[road] += 1
+
+    total_number = len(road_counter)
+
+    for intersection, (column_1, column_2) in data.intersection_dict.items():
+        for road in column_2:
+            number_of_car = int(road_counter[road] / (total_number / 2)) + 1
+            if number_of_car > 0:
+                output[intersection].append((road, number_of_car))
+
     write_to_file(f"output/{file_name}.txt", output)
 
 
@@ -38,5 +53,5 @@ def write_to_file(file_path: str, output: OUTPUT_TYPE) -> None:
 
 if __name__ == "__main__":
     for name in "abcdef":
-        simple_compute(name)
+        compute_with_counter(name)
 
