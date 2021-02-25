@@ -37,6 +37,7 @@ def compute_with_counter(file_name: str) -> None:
                     _, _, road_time = data.road_dict[road]
                     number_of_car = int(number_of_car / (count / math.sqrt(count)))
                     number_of_car = max(number_of_car, 1)
+                    number_of_car = min(number_of_car, data.duration)
                     if road_time > 25:
                         number_of_car = 1
                     # number_of_car = min(number_of_car, 5)
