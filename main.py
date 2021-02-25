@@ -33,15 +33,12 @@ def compute_with_counter(file_name: str) -> None:
             for road in column_2:
                 number_of_car = road_counter[road]
                 if number_of_car > 0:
-                    if intersection == 499:
-                        if number_of_car > 1:
-                            number_of_car = 1
-                            output[intersection].append((road, number_of_car))
-                    else:
-                        number_of_car = int(road_counter[road] / count)
-                        number_of_car = max(number_of_car, 1)
-                        # number_of_car = min(number_of_car, 5)
-                        output[intersection].append((road, number_of_car))
+                    _, _, road_time = data.road_dict[road]
+                    road_time_divided = road_time / 4
+                    number_of_car = int(number_of_car / (count / 10) / road_time_divided)
+                    number_of_car = max(number_of_car, 1)
+                    # number_of_car = min(number_of_car, 5)
+                    output[intersection].append((road, number_of_car))
 
     write_to_file(f"output/{file_name}.txt", output)
 
