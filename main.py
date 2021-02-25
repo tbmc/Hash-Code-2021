@@ -9,10 +9,17 @@ def simple_compute(file_name: str) -> None:
     data = read_data(f"data/{file_name}.txt")
     output: OUTPUT_TYPE = defaultdict(list)
 
-    for intersection, (input_road, output_road) in data.intersection_dict.items():
-        for road in output_road:
-            output[intersection].append((road, 1))
+    counter = 0
+    for intersection, (column_1, column_2) in data.intersection_dict.items():
+        if len(column_2) == 1:
+            counter += 1
+            for road in column_2:
+                output[intersection].append((road, data.duration))
+        else:
+            for road in column_2:
+                output[intersection].append((road, 1))
 
+    print(f"Intersection with only 1 input road: {counter}")
     write_to_file(f"output/{file_name}.txt", output)
 
 
