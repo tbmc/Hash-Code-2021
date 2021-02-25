@@ -27,13 +27,27 @@ def compute_with_counter(file_name: str) -> None:
         for road in road_list:
             road_counter[road] += 1
 
-    total_number = len(road_counter)
-
-    for intersection, (column_1, column_2) in data.intersection_dict.items():
-        for road in column_2:
-            number_of_car = int(road_counter[road] / (total_number / 2)) + 1
-            if number_of_car > 0:
-                output[intersection].append((road, number_of_car))
+    counter = 0
+    for intersection, (_, column_2) in data.intersection_dict.items():
+        count = sum(map(lambda s: road_counter[s], column_2))
+        if count != 0:
+            for road in column_2:
+                number_of_car = road_counter[road]
+                if count > 100:
+                    if number_of_car > 2:
+                        number_of_car = int(road_counter[road] / count)
+                        number_of_car = max(number_of_car, 1)
+                        # number_of_car = min(number_of_car, 5)
+                        output[intersection].append((road, number_of_car))
+                    else:
+                        counter += 1
+                else:
+                    if number_of_car > 0:
+                        number_of_car = int(road_counter[road] / count)
+                        number_of_car = max(number_of_car, 1)
+                        # number_of_car = min(number_of_car, 5)
+                        output[intersection].append((road, number_of_car))
+    print(f"Counter: {counter}")
 
     write_to_file(f"output/{file_name}.txt", output)
 
