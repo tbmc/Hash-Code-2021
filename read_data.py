@@ -5,7 +5,8 @@ from collections import defaultdict
 ROAD_DICT_TYPE = Dict[str, Tuple[int, int, int]]
 
 
-def read_data(file_path: str) -> Tuple[ROAD_DICT_TYPE, Dict[int, List[str]], List[List[str]]]:
+def read_data(file_path: str)\
+        -> Tuple[Tuple[int, int, int, int, int], ROAD_DICT_TYPE, Dict[int, List[str]], List[List[str]]]:
     with open(file_path) as f:
         content = f.read()
 
@@ -30,7 +31,7 @@ def read_data(file_path: str) -> Tuple[ROAD_DICT_TYPE, Dict[int, List[str]], Lis
     for car in cars:
         cards_list.append(car.split()[1:])
 
-    return road_dict, intersection_dict, cards_list
+    return (D, I, S, V, F), road_dict, intersection_dict, cards_list
 
 
 
